@@ -1,30 +1,31 @@
 # fileserver v0.1.0
 
-This project aids in setting up a tunnel that serves a single file on an encrypted connection, allowing to source it from your system and downloading it on another system you don't have "direct" access to, because under a firewall or such reasons.
+This project aids in setting up a tunnel that serves a single file on an encrypted connection, allowing to source it from your system and download it on another system you don't have "direct" access to, because under a firewall or such reasons.
 
-It employs a "jump server" to which it will reverse tunnel a local port via SSH. 
+It employs a "jump server" to which it will reverse tunnel - via SSH - a local web server it creates. In principle, this jump server can be something you already have, all that is needed is SSH access to it.
 
 It has been tested under Linux, both for the source and destination system; it will be adapted to Windows and MacOS.
 
 ## Prerequisites
 
 - A "jump server" that you can access via SSH from the source system;
-  - A port on it, accessible by "the world";
+  - A free port on it, accessible by "the world";
   - SSH on the jump server must be configured to allow remote tunnels (see below);
 - `python` v3 on the source system;
 - `curl` on the destination system.
 
 ## Usage
 
-- You configure and run the script `filetunnel.sh` with the file to transfer:
+- You configure the script `filetunnel.sh` with some parameters;
+- You run it with the file to transfer:
 ```bash
 ./fileserver.sh myFile.binary
 ```
 - It will output a `curl` command to use on the destination system to download the file.
 
-Behind the scenes, the script opens a web server using python, on a random local port; then reverse tunnels it on the jump server, making it available remotely. 
+Behind the scenes, the script opens a web server using python, on a random local port, with a random URL; then reverse tunnels it on the jump server, making it available remotely. 
 
-The `curl` script, when executed on the destination system, will connect to the port and download the file, assigning the correct filename to it.
+The `curl` command, when executed on the destination system, will connect to the port and download the file, assigning the correct filename to it.
 
 ## Setup
 
@@ -32,7 +33,7 @@ The `curl` script, when executed on the destination system, will connect to the 
 
 This is a "normal" server such as a VPS, that you can access via SSH from the source system.
 
-A port (to configure inside the script) must be accessible from outside, at least from the destination system.
+A port must be mapped/accessible from "outside", at least from the destination system.
 
 On ssh, (reverse) tunneling must be enabled. Ensure that you have this setting in `/etc/ssh/sshd_config`:
 
@@ -46,7 +47,7 @@ We'll also need to access the remote-forwarded port from outside. So, set:
 GatewayPorts clientspecified # or 'yes'
 ```
 
-**WARNING!** This setting allows the forwarded port (*any* forwarded port, even for other uses) to be globally accessible. Carefully consider the security implications of this.
+**WARNING!** This setting allows the forwarded port (*any* forwarded port, even for other uses) to be globally accessible. Consider the security implications of this.
 
 ### The source system
 
