@@ -106,10 +106,12 @@ if [ "$DO_HTTPS" -eq "1" ]; then
     ADD_FLAG="k"
 fi
 
-echo "All set up, using local port $LOCAL_PORT. Now use the following command:"
+echo "All set up, using local port $LOCAL_PORT."
+echo "To download from a shell, use the following command:"
 echo
 echo "curl -OJf$ADD_FLAG $PROTO://$FILE_SERVER:$PORT/$RND"
 echo
-echo "Then you can close this process with ctrl-c."
+echo "You can also visit the URL using a browser."
+echo "After the download, you can close this process with ctrl-c."
 
 wait "$PID1" "$PID2"
