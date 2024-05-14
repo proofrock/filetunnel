@@ -82,7 +82,7 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
 print(port)
 PYDOC`
 
-LOCAL_PORT=$(python -c "$FREEPORTSCRIPT")
+LOCAL_PORT=$(python3 -c "$FREEPORTSCRIPT")
 
 function handle_interrupt {
     kill -TERM "$PID1" "$PID2" 2>/dev/null
@@ -97,7 +97,7 @@ trap handle_interrupt SIGINT
 ssh $SSH_SERVER -N -R:$PORT:localhost:$LOCAL_PORT &
 PID1=$!
 
-{ python -c "$FILESERVERSCRIPT" "$1" "$RND" "$LOCAL_PORT" "$DO_HTTPS" "$CERT_FILE" "$KEY_FILE"; kill $PID1; } & # At exit, kills the ssh session
+{ python3 -c "$FILESERVERSCRIPT" "$1" "$RND" "$LOCAL_PORT" "$DO_HTTPS" "$CERT_FILE" "$KEY_FILE"; kill $PID1; } & # At exit, kills the ssh session
 PID2=$!
 
 PROTO="http"
