@@ -33,7 +33,7 @@ class SingleFileRequestHandler(SimpleHTTPRequestHandler):
             self.send_error(404)
 
 # Set up the HTTPS server
-server_address = ('', http_port)
+server_address = ('127.0.0.1', http_port)
 httpd = HTTPServer(server_address, SingleFileRequestHandler)
 
 if do_ssl:
