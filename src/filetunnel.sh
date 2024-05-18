@@ -9,7 +9,7 @@
 #####################
 
 # The python command
-PYTHON_COMMAND=python3
+PYTHON_COMMAND="python3"
 
 # How to contact the jump server from the "file server side". user@host
 SSH_SERVER="user@123.123.123.123"

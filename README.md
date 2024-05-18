@@ -26,7 +26,7 @@ It has been tested under Linux, both for the source and destination system; it w
 
 ## Usage
 
-- First, configure the script `filetunnel.sh` with some parameters;
+- First, configure the script `filetunnel.sh` (or `filetunnel.ps1` for Windows Powershell) with the needed parameters;
 - Run it with the file to transfer:
 ```bash
 ./fileserver.sh myFile.binary
@@ -38,6 +38,10 @@ It has been tested under Linux, both for the source and destination system; it w
 
 You need to ensure that the jump server is set up correctly, then configure the script.
 After this, you can simply use it forever and ever ;-).
+
+### Source system
+
+You'll need python3 and ssh installed. Under Windows, you can use chocolatey to install them.
 
 ### The jump server
 
@@ -116,7 +120,7 @@ sequenceDiagram
 
 ## To do
 
-- Adapt and fully test under MacOS, Windows
+- Adapt and fully test on MacOS
 - Optional "one shot" mode: when the file is downloaded, the server exists;
 - Optional compression;
 

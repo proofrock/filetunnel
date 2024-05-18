@@ -40,6 +40,6 @@ if do_ssl:
 try:
     httpd.serve_forever()
 except KeyboardInterrupt:
-    print("Shutting down local web server.")
+    print('Shutting down local web server.')
 finally:
     httpd.server_close()
