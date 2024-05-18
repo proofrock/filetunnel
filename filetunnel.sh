@@ -8,6 +8,9 @@
 # Edit this section #
 #####################
 
+# The python command
+PYTHON_COMMAND=python3
+
 # How to contact the jump server from the "file server side". user@host
 SSH_SERVER=user@123.123.123.123
 # How to contact the jump server from the "client side".
@@ -26,7 +29,18 @@ KEY_FILE=./key.pem
 
 RND=$(tr -dc 'A-Za-z0-9' < /dev/urandom | head -c 24)
 
+FREEPORTSCRIPT=`cat <<PYDOC
+
+import socket
+
+with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+    s.bind(('', 0))
+    addr, port = s.getsockname()
+print(port)
+PYDOC`
+
 FILESERVERSCRIPT=`cat <<PYDOC
+
 import os, sys, ssl
 from http.server import HTTPServer, SimpleHTTPRequestHandler
 
@@ -54,10 +68,6 @@ class SingleFileRequestHandler(SimpleHTTPRequestHandler):
             self.end_headers()
             with open(file_path, 'rb') as file:
                 self.wfile.write(file.read())
-        # elif self.path == '/exit':
-        #     self.wfile.write(b'bye')
-        #     self.send_response(200)
-        #     exit(0)
         else:
             self.send_error(404)
 
@@ -73,16 +83,7 @@ if do_ssl:
 httpd.serve_forever()
 PYDOC`
 
-FREEPORTSCRIPT=`cat <<PYDOC
-import socket
-
-with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
-    s.bind(('', 0))
-    addr, port = s.getsockname()
-print(port)
-PYDOC`
-
-LOCAL_PORT=$(python3 -c "$FREEPORTSCRIPT")
+LOCAL_PORT=$($PYTHON_COMMAND -c "$FREEPORTSCRIPT")
 
 function handle_interrupt {
     kill -TERM "$PID1" "$PID2" 2>/dev/null
@@ -94,10 +95,10 @@ function handle_interrupt {
 
 trap handle_interrupt SIGINT
 
-ssh $SSH_SERVER -N -R:$PORT:localhost:$LOCAL_PORT &
+ssh $SSH_SERVER -N -R:$PORT:127.0.0.1:$LOCAL_PORT &
 PID1=$!
 
-{ python3 -c "$FILESERVERSCRIPT" "$1" "$RND" "$LOCAL_PORT" "$DO_HTTPS" "$CERT_FILE" "$KEY_FILE"; kill $PID1; } & # At exit, kills the ssh session
+{ $PYTHON_COMMAND -c "$FILESERVERSCRIPT" "$1" "$RND" "$LOCAL_PORT" "$DO_HTTPS" "$CERT_FILE" "$KEY_FILE"; kill $PID1; } & # At exit, kills the ssh session
 PID2=$!
 
 PROTO="http"
