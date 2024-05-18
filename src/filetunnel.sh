@@ -26,14 +26,12 @@ KEY_FILE=./key.pem
 
 RND=$(tr -dc 'A-Za-z0-9' < /dev/urandom | head -c 24)
 
-# [BUILD] Put the contents of 'fileserver.py' in this section
 FREEPORTSCRIPT=`cat <<PYDOC
-# Put 'fileserver.py' here
+# Put 'freeport.py' here
 PYDOC`
 
-# [BUILD] Put the contents of 'freeport.py' in this section
 FILESERVERSCRIPT=`cat <<PYDOC
-# Put 'freeport.py' here
+# Put 'fileserver.py' here
 PYDOC`
 
 LOCAL_PORT=$(python3 -c "$FREEPORTSCRIPT")
