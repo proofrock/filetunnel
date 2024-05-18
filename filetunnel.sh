@@ -12,16 +12,16 @@
 PYTHON_COMMAND=python3
 
 # How to contact the jump server from the "file server side". user@host
-SSH_SERVER=user@123.123.123.123
+SSH_SERVER="user@123.123.123.123"
 # How to contact the jump server from the "client side".
-FILE_SERVER=123.123.123.123
+FILE_SERVER="123.123.123.123"
 # Port on the jump server to tunnel the HTTP server on
-PORT=7017
+PORT="7017"
 
 # Setup HTTPS
-DO_HTTPS=0
-CERT_FILE=./cert.pem
-KEY_FILE=./key.pem
+DO_HTTPS="0"
+CERT_FILE="./cert.pem"
+KEY_FILE="./key.pem"
 
 ###################
 # Not from now on #
@@ -80,7 +80,12 @@ if do_ssl:
     context.load_cert_chain(cert_file, key_file)
     httpd.socket = context.wrap_socket(httpd.socket, server_side=True)
 
-httpd.serve_forever()
+try:
+    httpd.serve_forever()
+except KeyboardInterrupt:
+    print("Shutting down local web server.")
+finally:
+    httpd.server_close()
 PYDOC`
 
 LOCAL_PORT=$($PYTHON_COMMAND -c "$FREEPORTSCRIPT")

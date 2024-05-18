@@ -37,4 +37,9 @@ if do_ssl:
     context.load_cert_chain(cert_file, key_file)
     httpd.socket = context.wrap_socket(httpd.socket, server_side=True)
 
-httpd.serve_forever()
+try:
+    httpd.serve_forever()
+except KeyboardInterrupt:
+    print("Shutting down local web server.")
+finally:
+    httpd.server_close()

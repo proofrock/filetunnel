@@ -114,26 +114,11 @@ sequenceDiagram
 
 ## Troubleshooting
 
-### When stopping the script w/ `ctrl-c`, a python error is shown
-```
-Traceback (most recent call last):
-  File "<string>", line 18, in <module>
-  File "/usr/lib/python3.12/socketserver.py", line 235, in serve_forever
-    ready = selector.select(poll_interval)
-            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/usr/lib/python3.12/selectors.py", line 415, in select
-    fd_event_list = self._selector.poll(timeout)
-                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-KeyboardInterrupt
-```
-This is ok, for now just ignore it. It's on the todo not to show it.
-
 ## To do
 
 - Adapt and fully test under MacOS, Windows
 - Optional "one shot" mode: when the file is downloaded, the server exists;
 - Optional compression;
-- When stopping the script, the python part emits an ugly-looking error, even if it's totally intended.
 
 ## Build and contribute
 
