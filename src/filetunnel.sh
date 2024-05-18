@@ -48,7 +48,7 @@ function handle_interrupt {
 
 trap handle_interrupt SIGINT
 
-ssh $SSH_SERVER -N -R:$PORT:localhost:$LOCAL_PORT &
+ssh $SSH_SERVER -N -R:$PORT:127.0.0.1:$LOCAL_PORT &
 PID1=$!
 
 { python3 -c "$FILESERVERSCRIPT" "$1" "$RND" "$LOCAL_PORT" "$DO_HTTPS" "$CERT_FILE" "$KEY_FILE"; kill $PID1; } & # At exit, kills the ssh session
