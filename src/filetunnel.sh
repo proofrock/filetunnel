@@ -8,6 +8,9 @@
 # Edit this section #
 #####################
 
+# The python command
+PYTHON_COMMAND=python3
+
 # How to contact the jump server from the "file server side". user@host
 SSH_SERVER=user@123.123.123.123
 # How to contact the jump server from the "client side".
@@ -34,7 +37,7 @@ FILESERVERSCRIPT=`cat <<PYDOC
 # Put 'fileserver.py' here
 PYDOC`
 
-LOCAL_PORT=$(python3 -c "$FREEPORTSCRIPT")
+LOCAL_PORT=$($PYTHON_COMMAND -c "$FREEPORTSCRIPT")
 
 function handle_interrupt {
     kill -TERM "$PID1" "$PID2" 2>/dev/null
@@ -49,7 +52,7 @@ trap handle_interrupt SIGINT
 ssh $SSH_SERVER -N -R:$PORT:127.0.0.1:$LOCAL_PORT &
 PID1=$!
 
-{ python3 -c "$FILESERVERSCRIPT" "$1" "$RND" "$LOCAL_PORT" "$DO_HTTPS" "$CERT_FILE" "$KEY_FILE"; kill $PID1; } & # At exit, kills the ssh session
+{ $PYTHON_COMMAND -c "$FILESERVERSCRIPT" "$1" "$RND" "$LOCAL_PORT" "$DO_HTTPS" "$CERT_FILE" "$KEY_FILE"; kill $PID1; } & # At exit, kills the ssh session
 PID2=$!
 
 PROTO="http"
