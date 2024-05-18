@@ -14,7 +14,7 @@ This project aids in setting up a tunnel that serves a single file on an encrypt
 
 It employs a "jump server" to which it will reverse tunnel - via SSH - a local web server it creates. In principle, this jump server can be something you already have, all that is needed is SSH access to it.
 
-It has been tested under Linux, both for the source and destination system; it will be adapted to Windows and MacOS.
+It has been tested under Linux and Windows; it should reasonably work in MacOS too.
 
 ## Prerequisites
 
