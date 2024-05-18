@@ -49,7 +49,7 @@ from http.server import HTTPServer, SimpleHTTPRequestHandler
 file_path = sys.argv[1] # File to serve
 url_path =  sys.argv[2] # Random string for URL path
 http_port = int(sys.argv[3]) # Port for the server
-do_ssl = sys.argv[4] == "1" # Do ssl?
+do_ssl = sys.argv[4] == '1' # Do ssl?
 if do_ssl:
     cert_file = sys.argv[5]
     key_file = sys.argv[6]
