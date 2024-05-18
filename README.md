@@ -1,4 +1,4 @@
-# fileserver v0.1.3
+# fileserver v0.1.4
 
 **The problem**: You need to copy a file to a remote system to which you only have shell access.
 
