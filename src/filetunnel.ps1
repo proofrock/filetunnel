@@ -1,4 +1,4 @@
-# filetunnel v0.1.4 https://github.com/proofrock/filetunnel
+# filetunnel v0.2.0 https://github.com/proofrock/filetunnel
 # Copyright (c) 2024- Germano Rizzo <oss AT germanorizzo DOT it>
 # See LICENSE file (MIT License)
 
