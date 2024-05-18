@@ -109,6 +109,7 @@ sequenceDiagram
 - The connection between the source system and the jump server is protected by `ssh`;
 - The connection between the jump server and the destination system is protected by (optional) HTTPS, using a user-provided certificate;
   - Also, the generated URL is random;
+- The local server is bound to 127.0.0.1;
 - Once transferred the file, it's good measure to terminate the script to avoid continued exposure.
 
 ## Troubleshooting
@@ -136,7 +137,7 @@ This is ok, for now just ignore it. It's on the todo not to show it.
 
 ## Build and contribute
 
-In the `src` folder there are three script (one bash, two python) to manually "compile" into the target script. Make a copy of the bash script, and then follow the comments that contain `[BUILD]`.
+In the `src` folder there is a `build.sh` script that will assemble the files therein and build the "distribution" files.
 
 If you have any good idea, please feel free to hack on it! The code should be fairly simple to understand and change, and doesn't have many dependencies.
 

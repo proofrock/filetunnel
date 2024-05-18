@@ -25,10 +25,6 @@ class SingleFileRequestHandler(SimpleHTTPRequestHandler):
             self.end_headers()
             with open(file_path, 'rb') as file:
                 self.wfile.write(file.read())
-        # elif self.path == '/exit':
-        #     self.wfile.write(b'bye')
-        #     self.send_response(200)
-        #     exit(0)
         else:
             self.send_error(404)
 
